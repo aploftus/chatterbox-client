@@ -1,8 +1,60 @@
 
+var app = {
+  init: function() {},
+  
+  send: function(message) {
+    $.ajax({
+      // This is the url you should use to communicate with the parse API server.
+      url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
+      type: 'POST',
+      data: message,
+      contentType: 'application/json',
+      success: function (data) {
+        // console.log('chatterbox: Message sent');
+        // console.log(this.data);
+      },
+      error: function (data) {
+        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+        console.error('chatterbox: Failed to send message', data);
+      }
+    });
+  },
+  
+  fetch: function() {
+    // "get" from server
+  },
+  
+  clearMessages: function() {},
+  
+  renderMessage: function() {},
+  // add class username
+   
+  renderRoom: function() {},
+  
+};
 
-// something to grab the username? is this already stored somewhere? location.search?
+$( document ).ready(function() { 
+  // sends message to server 
+  $('#send-message').on('click', function(event) {
+    var indexOfEqual = (window.location.search).indexOf('=');
+    
+    var message = {
+      username: window.location.search.slice(indexOfEqual + 1),
+      text: $('.textbox').val(),
+      roomname: $('#roomName').val()
+    };
+    app.send(message);
+    $('.textbox').val('');
+  });
+  
+  // retrieve updated feed from server
+  $('#refresh').on('click', function(event) {
+    
+  });
+});
 
-// something to create / put together the message from textbox input and username
+
+// $.ajax({message object})
 
 
 // something to grab messages from server (get request) (jquery $.ajax)
@@ -30,27 +82,10 @@
 
 
 
-// POST MESSAGES
-// var message = {
-//   username: 'shawndrost',
-//   text: 'trololo',
-//   roomname: '4chan'
-// };
 
-// $.ajax({
-//   // This is the url you should use to communicate with the parse API server.
-//   url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
-//   type: 'POST',
-//   data: JSON.stringify(message),
-//   contentType: 'application/json',
-//   success: function (data) {
-//     console.log('chatterbox: Message sent');
-//   },
-//   error: function (data) {
-//     // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-//     console.error('chatterbox: Failed to send message', data);
-//   }
-// });
+
+
+
 
 // Display messages retrieved from the parse server.
 
