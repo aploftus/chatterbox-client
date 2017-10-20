@@ -1,4 +1,34 @@
-// use this URL http://parse.sfm6.hackreactor.com/chatterbox/classes/messages
+
+
+// something to grab the username? is this already stored somewhere? location.search?
+
+// something to create / put together the message from textbox input and username
+
+
+// something to grab messages from server (get request) (jquery $.ajax)
+// happens more than once (refresh button or periodic get request)
+// and display those messages
+
+// when we get messages from server, parse text to look for evil chars
+// Escaping &, <, >, ", ', `, , !, @, $, %, (, ), =, +, {, }, [, and ] is almost enough
+// Context is key
+
+// function to filter master feed to selected room
+// accomplish onclick of user selected
+
+// function that creates a room in the room list
+// it grabs the roomname from incoming messages OR from a user creating a new room
+// it populates the "select" form with the room names
+
+// a function to determine if a string is SAFE or UNSAFE
+// usernames, text we type, messages we get from server
+
+
+// something to post/give the server a new message created on our client side
+// when we post, maybe immediately "get" new messages
+
+
+
 
 // POST MESSAGES
 // var message = {
@@ -25,13 +55,7 @@
 // Display messages retrieved from the parse server.
 
 // Use proper escaping on any user input. Since you're displaying input that other users have typed, your app is vulnerable XSS attacks. See the section about escaping below.
-// Note: If you issue an XSS attack, you must make it innocuous enough to be educational, rather than disruptive. Basically you should scope your attacks to be console.logs or minor style changes. The following are not allowed:
 
-// alerts
-// adding or removing dom elements
-// auto-posting
-// DDOS attacks
-// Setup a way to refresh the displayed messages (either automatically or with a button)
 
 // Allow users to select a user name for themself and to be able to send messages
 
