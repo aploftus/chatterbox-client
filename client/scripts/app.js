@@ -4,32 +4,25 @@ var app = {
   
   send: function(message) {
     $.ajax({
-      // This is the url you should use to communicate with the parse API server.
       url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
       type: 'POST',
       data: message,
       contentType: 'application/json',
       success: function (data) {
-        // console.log('chatterbox: Message sent');
-        // console.log(this.data);
         console.log('chatterbox: Message sent');
       },
       error: function (data) {
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
         console.error('chatterbox: Failed to send message', data);
       }
     });
   },
   
   fetch: function() {
-    // "get" from server
-    $.ajax({
-      // This is the url you should use to communicate with the parse API server.
-      url: 'http://parse.sfm6.hackreactor.com/',
+    return $.ajax({
+      url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
       type: 'GET',
-      data: 'chatterbox/classes/messages',
-      success: function () {
-        console.error('successful fetch');
+      success: function (data) {
+        console.log(data);
       },
       error: function (data) {
         console.error('chatterbox: Failed to fetch message');
@@ -46,7 +39,7 @@ var app = {
     var $newMessage = $('<div></div>');
     // populate element with username (attach class="username"), message
     var $username = $('<span class="username"></span>');
-    // $username.addClass(message.username).text(message.username);
+    $username.addClass(message.username).text(message.username);
     var $messageText = $('<span></span>').text(': ' + message.text);
     $newMessage.append($username, $messageText);
     // prepend element to DOM at div id="chats"
@@ -60,10 +53,10 @@ var app = {
       
   },
   
-  server: 'http://parse.sfm6.hackreactor.com/',
+  server: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
   
-  handleUserNameClick: function() {
-    
+  handleUserNameClick: function($user) {
+    $('#chats').find('.' + $user).css('font-weight', 'bold');
   },
   
   handleSubmit: function() {
@@ -88,26 +81,27 @@ $( document ).ready(function() {
   
   // retrieve updated feed from server
   $('#refresh').on('click', function(event) {
-    var fetchedMessages = app.fetch().results;
-    var friendsList = {};
-    fetchedMessages.forEach(function (message) {
-      app.renderMessage(message);
-      // search #friendlist for an <li> with text message.username
-      // if doesn't exist
-      // create new <li> item with text message.username
-      // append to #friendlist
-      $('li').each(function(i) {
-        if ($(this).text() === message.username) {
-          // continue;
-        }
-      });
+    app.fetch();
+    // var fetchedMessages = app.fetch();
+    // console.log(app.fetch());
+    // console.log(fetchedMessages);
+    // var friendsList = {};
+    // fetchedMessages.forEach(function (message) {
+    //   app.renderMessage(message);
+    //   // add username to friends list if not already there
+    //   if ($('ul li').filter(function(friend) {
+    //     return friend.text() === message.username;
+    //   }).length === 0) {
+    //     $('#main ul').append('<li>' + message.username + '</li>').addClass('username' + message.username);
+    //   }
       
-    });
+    // });
   });
   
   $('.username').on('click', function(event) {
-    
-    app.handleUserNameClick();
+    var $user = $(this).val();
+    $(this).css('font-weight', 'bold');
+    app.handleUserNameClick($user);
   });
     
 });
