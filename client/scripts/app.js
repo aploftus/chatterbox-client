@@ -112,8 +112,8 @@ $( document ).ready(function() {
     
 });
 
-// friendsList
 
+// friendsList
 
 // $.ajax({message object})
 
