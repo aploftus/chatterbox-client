@@ -28,16 +28,31 @@ var app = {
       url: 'http://parse.sfm6.hackreactor.com/',
       type: 'GET',
       data: 'chatterbox/classes/messages',
+      success: function () {
+        console.error('successful fetch');
+      },
       error: function (data) {
-        console.error('chatterbox: Failed to fetch message from', data);
+        console.error('chatterbox: Failed to fetch message');
       }
     });
   },
   
-  clearMessages: function() {},
+  clearMessages: function() {
+    $('#chats').html('');
+  },
   
-  renderMessage: function() {},
-  // add class username
+  renderMessage: function(message) {
+    // create an HTML element
+    var $newMessage = $('<div></div>');
+    // populate element with username (attach class="username"), message
+    var $username = $('<span class="username"></span>');
+    // $username.addClass(message.username).text(message.username);
+    var $messageText = $('<span></span>').text(': ' + message.text);
+    $newMessage.append($username, $messageText);
+    // prepend element to DOM at div id="chats"
+    $('#chats').prepend($newMessage);
+  },
+    
    
   renderRoom: function() {},
   
@@ -62,6 +77,9 @@ $( document ).ready(function() {
   // retrieve updated feed from server
   $('#refresh').on('click', function(event) {
     var fetchedMessages = app.fetch().results;
+    fetchedMessages.forEach(function (message) {
+      app.renderMessage(message);
+    });
   });
     
 });
