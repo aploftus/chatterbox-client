@@ -54,7 +54,11 @@ var app = {
   },
     
    
-  renderRoom: function() {},
+  renderRoom: function(roomName) {
+    var $roomOption = $('<option></option>').val(roomName).text(roomName);
+    $('#roomSelect').append($roomOption);
+      
+  },
   
   server: 'http://parse.sfm6.hackreactor.com/'
   
