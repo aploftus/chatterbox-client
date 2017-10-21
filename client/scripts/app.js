@@ -1,5 +1,7 @@
 
 var app = {
+  rawData: {},
+  
   init: function() {},
   
   send: function(message) {
@@ -18,11 +20,16 @@ var app = {
   },
   
   fetch: function() {
-    return $.ajax({
+    $.ajax({
       url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
       type: 'GET',
       success: function (data) {
+        console.log('incoming data: ');
         console.log(data);
+        app.rawData = data.results;
+        app.rawData.forEach(function(message) {
+          app.renderMessage(message);
+        });
       },
       error: function (data) {
         console.error('chatterbox: Failed to fetch message');
@@ -82,9 +89,6 @@ $( document ).ready(function() {
   // retrieve updated feed from server
   $('#refresh').on('click', function(event) {
     app.fetch();
-    // var fetchedMessages = app.fetch();
-    // console.log(app.fetch());
-    // console.log(fetchedMessages);
     // var friendsList = {};
     // fetchedMessages.forEach(function (message) {
     //   app.renderMessage(message);
