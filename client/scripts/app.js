@@ -4,7 +4,9 @@ var app = {
   
   server: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
   
-  init: function() {},
+  init: function() {
+    app.fetch();
+  },
   
   send: function(message) {
     $.ajax({
@@ -68,23 +70,24 @@ var app = {
   },
   
   handleSubmit: function() {
-    
-  }
-  
-};
-
-$( document ).ready(function() { 
-  // sends message to server 
-  $('#send-message').on('click', function(event) {
     var indexOfEqual = (window.location.search).indexOf('=');
     
     var message = {
       username: window.location.search.slice(indexOfEqual + 1),
-      text: $('.textbox').val(),
+      text: $('#message').val(),
       roomname: $('#roomName').val()
     };
     app.send(message);
-    $('.textbox').val('');
+    $('#message').val('');  
+  }
+  
+};
+
+$(document).ready(function() { 
+  app.init();
+  // sends message to server 
+  $('#send').on('click', function(event) {
+    app.handleSubmit();
   });
   
   // retrieve updated feed from server
