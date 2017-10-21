@@ -2,13 +2,15 @@
 var app = {
   rawData: {},
   
+  server: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
+  
   init: function() {},
   
   send: function(message) {
     $.ajax({
       url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
       type: 'POST',
-      data: message,
+      data: JSON.stringify(message),
       contentType: 'application/json',
       success: function (data) {
         console.log('chatterbox: Message sent');
@@ -43,24 +45,23 @@ var app = {
   
   renderMessage: function(message) {
     // create an HTML element
-    var $newMessage = $('<div></div>');
+    var $newMessage = $('<div></div>').addClass('chat');
     // populate element with username (attach class="username"), message
+    var $timestamp = $('<div>' + message.createdAt + '</div>');
     var $username = $('<span class="username"></span>');
-    $username.addClass(message.username).text(message.username);
     var $messageText = $('<span></span>').text(': ' + message.text);
-    $newMessage.append($username, $messageText);
+    
+    $username.addClass(message.username).text(message.username);
+    $newMessage.append($timestamp, $username, $messageText);
     // prepend element to DOM at div id="chats"
     $('#chats').prepend($newMessage);
   },
-    
    
   renderRoom: function(roomName) {
     var $roomOption = $('<option></option>').val(roomName).text(roomName);
     $('#roomSelect').append($roomOption);
       
   },
-  
-  server: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
   
   handleUserNameClick: function($user) {
     $('#chats').find('.' + $user).css('font-weight', 'bold');
