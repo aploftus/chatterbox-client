@@ -25,15 +25,11 @@ var app = {
     // "get" from server
     $.ajax({
       // This is the url you should use to communicate with the parse API server.
-      url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
+      url: 'http://parse.sfm6.hackreactor.com/',
       type: 'GET',
-      success: function (data) {
-        // console.log('chatterbox: Message sent');
-        // console.log(this.data);
-      },
+      data: 'chatterbox/classes/messages',
       error: function (data) {
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-        console.error('chatterbox: Failed to send message', data);
+        console.error('chatterbox: Failed to fetch message from', data);
       }
     });
   },
