@@ -60,7 +60,15 @@ var app = {
       
   },
   
-  server: 'http://parse.sfm6.hackreactor.com/'
+  server: 'http://parse.sfm6.hackreactor.com/',
+  
+  handleUserNameClick: function() {
+    
+  },
+  
+  handleSubmit: function() {
+    
+  }
   
 };
 
@@ -81,12 +89,30 @@ $( document ).ready(function() {
   // retrieve updated feed from server
   $('#refresh').on('click', function(event) {
     var fetchedMessages = app.fetch().results;
+    var friendsList = {};
     fetchedMessages.forEach(function (message) {
       app.renderMessage(message);
+      // search #friendlist for an <li> with text message.username
+      // if doesn't exist
+      // create new <li> item with text message.username
+      // append to #friendlist
+      $('li').each(function(i) {
+        if ($(this).text() === message.username) {
+          // continue;
+        }
+      });
+      
     });
+  });
+  
+  $('.username').on('click', function(event) {
+    
+    app.handleUserNameClick();
   });
     
 });
+
+// friendsList
 
 
 // $.ajax({message object})
