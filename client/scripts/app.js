@@ -22,6 +22,19 @@ var app = {
   
   fetch: function() {
     // "get" from server
+    $.ajax({
+      // This is the url you should use to communicate with the parse API server.
+      url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
+      type: 'GET',
+      success: function (data) {
+        // console.log('chatterbox: Message sent');
+        // console.log(this.data);
+      },
+      error: function (data) {
+        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+        console.error('chatterbox: Failed to send message', data);
+      }
+    });
   },
   
   clearMessages: function() {},
@@ -30,6 +43,8 @@ var app = {
   // add class username
    
   renderRoom: function() {},
+  
+  server: 'http://parse.sfm6.hackreactor.com/'
   
 };
 
@@ -49,8 +64,9 @@ $( document ).ready(function() {
   
   // retrieve updated feed from server
   $('#refresh').on('click', function(event) {
-    
+    var fetchedMessages = app.fetch().results;
   });
+    
 });
 
 
